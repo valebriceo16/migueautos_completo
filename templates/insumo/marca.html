@@ -1,0 +1,50 @@
+{% extends '_base.html' %}
+{% load tailwind_filters %}
+{% block content %}
+
+
+
+
+<!-- Modal content -->
+<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+    <!-- Modal header -->
+    <div class="flex items-start justify-center p-4 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            Agregar Marca
+        </h3>
+    </div>
+    <!-- Modal body -->
+    <div class="p-6 space-y-6">
+        <p class="flex justify-center leading-relaxed text-gray-500 xt-base dark:text-gray-400">
+            Ingrese el nombre de la marca a registrar
+        </p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.error %} class="{{ message.errot }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+         
+        <div id="div_id_nombre"  class="flex items-center justify-center p-6 space-x-2 border-gray-200 rounded-b dark:border-gray-600"> <label for="id_nombre" class="block mb-2 text-sm font-bold text-gray-700">
+                Nombre<span class="asteriskField">*</span> </label> <input type="text" name="nombre" maxlength="45"
+                class="block w-1/2 px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none textinput focus:outline-none"
+                required="" id="id_nombre"> </div>
+        <div
+            class="flex items-center justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <button type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar</button>
+
+            
+
+        </div>
+    </form>
+</div>
+</div>
+</div>
+
+{% endblock content %}
