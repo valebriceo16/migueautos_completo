@@ -56,38 +56,27 @@ def eliminarServicio(request,id):
 
 @login_required(login_url='/login/')
 def insumos(request):
-    #recorrer datos de la base de datos
-    insumo_db = Insumo.objects.all()
-    marca_db = Marca.objects.all()
-    
-    #formularios
-    marca_form = MarcaForm()
-    insumo_form = InsumoForm()
-    #validar formularios
-    if request.method == "POST":
-        insumo_form = InsumoForm(request.POST)
-        if insumo_form.is_valid():
-            nombre = insumo_form.cleaned_data['nombre']
-            precio = insumo_form.cleaned_data['precio']
-            marca = insumo_form.cleaned_data['marca']
-            print('valido')
-            if Insumo.objects.filter(nombre=nombre, precio=precio,marca=marca).exists():
-                messages.success(request,'Ups! Insumo existente')
-            else:
-                insumo_form.save()
-                messages.success(request, 'Insumo agregado correctamente.')
-                return redirect('insumo')
+    db_insumo = Insumo.objects.all()
+    form = InsumoForm()
+    if request.method == 'POST':
+        form = InsumoForm(request.POST)
+        print(form)
+        if not form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            marca = form.cleaned_data['marca']
+            if Insumo.objects.filter(nombre=nombre,marca=marca).exists():
+                messages.success(request,'El insumo %s9 es existente' %nombre)
+            return redirect ('insumo')
+        else:
+            form= MarcaForm(request.POST)
+            s = form.save()
+            s.save()
+            return redirect('insumo')
               
-    # if marca_form.is_valid() and request.method == 'POST':
-    #     marca_form.save()
-    #     messages.success(request,'Marca creada correctamente')
-        return redirect('insumo')
     context = {
-        'insumo_db': insumo_db,	
-        'insumo': insumo_form,
-        'marca_db': marca_db,
-        'marca': marca_form,
-    }
+        'insumos' : db_insumo,
+        'form': form,
+    } 
     return render (request, 'insumo/insumo.html', context)
 
 def editarInsumo(request,id):   
@@ -133,22 +122,24 @@ def eliminarInsumo(request,id):
 # LOGICA DE marca (EDITAR, ELIMINAR  Y OTRAS FUNCIONES)
 @login_required(login_url='/login/')
 def marca(request):
-    marca_db = Marca.objects.all()
-    formulario_marca = MarcaForm()
-    if request.method == "POST":
-        formulario_marca = MarcaForm(request.POST)
-        if formulario_marca.is_valid():
-            nombre = formulario_marca.cleaned_data['nombre']
-            print('valido')
-            if Marca.objects.filter(nombre=nombre).exists():
-                messages.success(request,'Ups! Marca existente')
+    db_insumo = Marca.objects.all()
+    form = MarcaForm()
+    if request.method == 'POST': 
+        form = MarcaForm(request.POST)
+        if form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            
+            if Insumo.objects.filter(nombre=nombre).exists():
+                messages.success(request,'La marca %s ya existe'%nombre)
+                return redirect ('insumo')
             else:
-                formulario_marca.save()
-                messages.success(request, 'Marca agregado correctamente.')
-                return redirect('marca')
+                form = MarcaForm(request.POST)
+                s = form.save()
+                s.save()
+                return redirect('insumo')
     context = {
-        'marca_dbs': marca_db,
-        'formulario_marca': formulario_marca,
+        'marcas' :db_insumo,
+        'form': form,
     }
     return render (request,'insumo/marca.html', context)
 
