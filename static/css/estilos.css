@@ -5,3 +5,22 @@
   right: 20px;
   width: 50px;
 }
+.f0 {
+  font-size: 0.8rem;
+}
+.f1 {
+  font-size: 0.9rem;
+}
+.f2 {
+  font-size: 1rem;
+}
+.f3 {
+  font-size: 1.1rem;
+}
+.f4 {
+  font-size: 1.2rem;
+}
+.dark-mode{
+  background-color:rgba(0, 0, 0, 0.822);
+  color:#fff;
+}
