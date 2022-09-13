@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_tailwind', #Formularios con estilos de tailwind    
     
     #Apps del proyecto
+    'miproyecto',
     'registro',
     'insumo',
     'facturacion',
@@ -125,7 +126,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '0000',
     }
 }
 
