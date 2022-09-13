@@ -159,7 +159,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-es' # lenguaje del proyecto
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota' #Zona horaria
 
 USE_I18N = True
 
