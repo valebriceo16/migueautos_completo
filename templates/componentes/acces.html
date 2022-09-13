@@ -24,9 +24,6 @@
       <button type="button" id="restaurar">
         <img class="w-25" src="{% static 'img/restart.svg' %}" alt="" />
       </button>
-      <button type="button" id="dark">
-        <img class="w-25" src="{% static 'img/invert_colors_black_24dp.svg'%}" alt="" />
-      </button>
       </div>
   </div>
 </div>
@@ -61,8 +58,5 @@
   });
   changeClass();
   const cuerpo = document.body;
-  document.getElementById("dark").addEventListener("click", () => {
-    cuerpo.classList.toggle("dark-mode");
-  });
   
 </script>
