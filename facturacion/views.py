@@ -26,12 +26,14 @@ def generar_factura(request):
                 fecha=Hora.strftime("%d/%m/%y %H:%M:%S"),
                 usuario=usuario,
                 vehiculo=vehiculo,
-            )#se crea la factura
+            )
+            #se crea la factura
             messages.success(request, f'Factura agregada    corretamente.')#Mensaje de exito
             print('se ah logrado hacer la factura ')
             
-            return redirect('Tienda',aux.id)#Me redirija a la tienda con el id de la factura
+            return redirect('Tienda', aux.id)#Me redirija a la tienda con el id de la factura
         else:# si no
+            factura = FacturaForm()
             print("formulario invalido") # Se imprime en la consola que tenemos errores
     else:# a menos que no sea post
         factura = FacturaForm()# se  seguira cargando el factura form
@@ -48,27 +50,25 @@ def agregar_servicios(request):
     pass
 
 
-
-
 def tienda(request,pk):
+    query = Generar.objects.get(id=pk)
+    print(query)
     productos = Insumo.objects.all()
-    datos_factura = Generar.objects.get(id=pk)
     if request.method == 'POST' and 'factura' in request.POST:
-            aux = Compras.objects.create(factura=datos_factura,estado='Activo',tipodeservicio='Latoneria',)
-            return redirect("factura", aux.pk)
+        return redirect("factura")
     context ={
         'productos':productos,
-        'datos_factura':datos_factura,
+        # 'datos_factura':datos_factura,
         }
     # return redirect("Tienda", datos_factura.pk)
     return render(request, 'facturacion/tienda.html', context)
 
 def agregar_producto(request, producto_id):
-
     carrito = Carrito(request)
     producto = Insumo.objects.get(id=producto_id)
     carrito.agregar(producto)
-    return redirect("Tienda", producto.pk)
+    
+    return redirect("Tienda")
 
 def eliminar_producto(request, producto_id):
     carrito = Carrito(request)
@@ -109,6 +109,8 @@ def carrito(request,pk):
     usuario = Generar.objects.get(id=pk).usuario
     vehiculo = Generar.objects.get(id=pk).vehiculo
     generar = Generar.objects.filter(usuario=datos_factura)
+    
+    
     
     
     # users = Compras.objects.filter(usuario=datos_factura)

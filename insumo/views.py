@@ -61,17 +61,16 @@ def insumos(request):
     if request.method == 'POST':
         form = InsumoForm(request.POST)
         print(form)
-        if not form.is_valid():
+        if form.is_valid():
             nombre = form.cleaned_data['nombre']
             marca = form.cleaned_data['marca']
             if Insumo.objects.filter(nombre=nombre,marca=marca).exists():
-                messages.success(request,'El insumo %s9 es existente' %nombre)
-            return redirect ('insumo')
-        else:
-            form= MarcaForm(request.POST)
-            s = form.save()
-            s.save()
-            return redirect('insumo')
+                messages.success(request,'El insumo %s es existente' %nombre)
+            else:
+                s = form.save()
+                s.save()
+                messages.success(request,'El insumo %s fue registrado correctamente' %nombre)
+                return redirect('insumo')
               
     context = {
         'insumos' : db_insumo,
@@ -85,13 +84,13 @@ def editarInsumo(request,id):
     print(edit_insumo)
     if request.method == "POST":
         insumo_form = InsumoForm(request.POST)
-        if not insumo_form.is_valid():
+        if insumo_form.is_valid():
             nombre = insumo_form.cleaned_data['nombre']
-            precio = insumo_form.cleaned_data['precio']
             marca = insumo_form.cleaned_data['marca']
             print('valido')
-            if Insumo.objects.filter(nombre=nombre, precio=precio,marca=marca).exists():
+            if Insumo.objects.filter(nombre=nombre,marca=marca).exists():
                 messages.error(request,'%s Ya es un insumo existente'%edit_insumo.nombre)
+            
             else:
                 insumo_form.save()
                 messages.success(request, 'Insumo editado %s correctamente.' %edit_insumo.nombre)
@@ -136,6 +135,7 @@ def marca(request):
                 form = MarcaForm(request.POST)
                 s = form.save()
                 s.save()
+                messages.success(request,'La marca %s fue registrada exitosamente'%nombre)
                 return redirect('insumo')
     context = {
         'marcas' :db_insumo,
