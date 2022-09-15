@@ -60,18 +60,21 @@ def insumos(request):
     form = InsumoForm()
     if request.method == 'POST':
         form = InsumoForm(request.POST)
-        print(form)
         if form.is_valid():
             nombre = form.cleaned_data['nombre']
             marca = form.cleaned_data['marca']
-            if Insumo.objects.filter(nombre=nombre,marca=marca).exists():
+            precio = form.cleaned_data['precio']
+            print(marca)
+            if Insumo.objects.filter(nombre=nombre,marca=marca,precio=precio).exists():
                 messages.success(request,'El insumo %s es existente' %nombre)
-            else:
-                s = form.save()
-                s.save()
-                messages.success(request,'El insumo %s fue registrado correctamente' %nombre)
+            if not Insumo.objects.filter(nombre=nombre, precio=precio,marca=marca).exists():
+                Insumo.objects.create(nombre=nombre, precio=precio,marca=marca)
+                messages.success(request,'El insumo registrado correctamente' %nombre)
                 return redirect('insumo')
-              
+            else:
+                form = InsumoForm(request.POST)
+    else:
+        form = InsumoForm(request.POST)
     context = {
         'insumos' : db_insumo,
         'form': form,
@@ -79,25 +82,25 @@ def insumos(request):
     return render (request, 'insumo/insumo.html', context)
 
 def editarInsumo(request,id):   
-    edit_insumo = Insumo.objects.get(id=id)
-    insumo_form = InsumoForm(request.POST or None, request.FILES or None, instance=edit_insumo)
-    print(edit_insumo)
-    if request.method == "POST":
-        insumo_form = InsumoForm(request.POST)
-        if insumo_form.is_valid():
-            nombre = insumo_form.cleaned_data['nombre']
-            marca = insumo_form.cleaned_data['marca']
-            print('valido')
-            if Insumo.objects.filter(nombre=nombre,marca=marca).exists():
-                messages.error(request,'%s Ya es un insumo existente'%edit_insumo.nombre)
-            
-            else:
-                insumo_form.save()
-                messages.success(request, 'Insumo editado %s correctamente.' %edit_insumo.nombre)
-                return redirect('insumo')
+    editar = Insumo.objects.get(id=id)
+    if request.method == 'POST':
+        form = InsumoForm(request.POST, instance=editar)
+        insumo = request.POST['nombre']
+        if form.is_valid():
+                nombre = form.cleaned_data['nombre']
+                precio = form.cleaned_data['precio']
+                marca = form.cleaned_data['marca']
+                print(marca)
+                if Insumo.objects.filter(nombre=nombre,precio=precio,marca=marca).exists():
+                    messages.warning(request,'Insumo no se puede editar')
+                    return redirect('insumo')
+                else:
+                    aux = form.save()
+                    messages.success(request,'Insumo editado correctamente')
+        
     context = {
-         'insumo': insumo_form,
-         'edit': edit_insumo,
+         'insumo': form,
+         'edit': editar,
     }
     return render (request, 'insumo/editar.html', context) 
     

@@ -11,15 +11,7 @@ class vehiculoForm(forms.ModelForm):
     class Meta:
         model = Vehículo
         fields = ['placa','modelo','color','estado','usuario']
-        # widgets = {
-            #  'fecha':forms.DateInput(
-                #  attrs = {
-                #  'readonly':True,
-                    # 'hidden': True,
-                    # 'placeholder': 'hola',
-                    # 'required': False
-                #   }
-                #  )},
+
              
             
     

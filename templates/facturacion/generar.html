@@ -6,16 +6,18 @@
 <form method="POST">
 
   {% csrf_token %}
-  <div id="div_id_usuario" class="mb-3"> <label for="id_usuario" class="block mb-2 text-sm font-bold text-gray-700 ">
-      Usuario<span class="asteriskField">*</span> </label>
+  <div id="div_id_usuario" class="mb-3">
+     <label for="id_usuario" class="block mb-2 text-sm font-bold text-gray-700 ">
+      Usuario<span class="asteriskField">*</span> 
+    </label>
     <div class="mb-3">
       <div class="relative">
         <select
           class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 focus:outline-none"
           name="usuario">
           <option value="">---------</option>
-          {% for user in usuario %}
-          <option value="{{user.id}}">{{user.nombre}}</option>
+          {% for users in usuario %}
+          <option value="{{users.id}}">{{users.nombre}}</option>
           {% endfor %}
         </select>
       </div>
@@ -30,8 +32,8 @@
           class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select2 focus:outline-none"
           name="vehiculo">  
           <option>---------</option>
-          {% for Vehiculo in vehiculo  %}
-          <option data-index-number="{{Vehiculo.usuario_id}}" value="{{Vehiculo.id}}">{{Vehiculo.placa}}</option>
+          {% for vehiculos in vehiculo  %}
+          <option data-index-number="{{vehiculos.usuario_id}}" value="{{vehiculos.id}}">{{vehiculos.placa}}</option>
           {% endfor %}
         </select>
       </div>

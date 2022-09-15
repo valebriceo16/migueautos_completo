@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount'
 ]
+
+
 #Formularios con crispy
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind" #De donde salen los estilos para los forms de tailwind
 
@@ -178,7 +180,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Envio de correos en modo de desarrollo 
+#Envio de correos
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587

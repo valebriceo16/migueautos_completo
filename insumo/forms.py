@@ -12,10 +12,16 @@ class InsumoForm(forms.ModelForm):
         model = Insumo
         fields= '__all__'
     def clean(self):
-        nombre = self.cleaned_data['nombre']
-        marca = self.cleaned_data['marca']
-        if Insumo.objects.filter(nombre=nombre,marca=marca).exists():
-            raise forms.ValidationError('El insumo ya existe.')        
+        try:
+            nombre = self.cleaned_data['nombre']
+            marca = self.cleaned_data['marca']
+            precio = self.cleaned_data['precio']
+            if Insumo.objects.filter(nombre=nombre,marca=marca,precio=precio).exists():
+                raise forms.ValidationError('Registro existente.') 
+                 
+        except Insumo.DoesNotExist:
+            pass
+        return self.cleaned_data      
 
             #fields = '__all__'
         
