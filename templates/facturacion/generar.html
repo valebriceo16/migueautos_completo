@@ -1,35 +1,30 @@
 {% extends "_base.html" %}
 {% load static %}
-{% load tailwind_filters %}
 {% block title %}Facturacion{% endblock title %}
 {% block content %}
-<form method="POST">
-
-  {% csrf_token %}
-  <div id="div_id_usuario" class="mb-3">
-     <label for="id_usuario" class="block mb-2 text-sm font-bold text-gray-700 ">
-      Usuario<span class="asteriskField">*</span> 
-    </label>
-    <div class="mb-3">
-      <div class="relative">
-        <select
-          class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 focus:outline-none"
-          name="usuario">
-          <option value="">---------</option>
-          {% for users in usuario %}
-          <option value="{{users.id}}">{{users.nombre}}</option>
-          {% endfor %}
-        </select>
+<div class="flex justify-center">
+  <div class="w-1/2">
+    <form method="POST">
+      {% csrf_token %}
+      <div id="div_id_usuario" class="mb-3"> <label for="id_usuario" class="block mb-2 text-sm font-bold text-gray-700 ">
+        Usuario<span class="asteriskField">*</span> </label>
+        <div class="mb-3">
+          <div class="relative">
+            <select class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 focus:outline-none"
+            name="vehiculo">
+            <option>---------</option>
+            {% for user in usuario  %}
+            <option value="{{user.id}}">{{user.nombre}}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div id="div_id_vehiculo" class="mb-3"> <label for="id_vehiculo" class="block mb-2 text-sm font-bold text-gray-700">
+    <div id="div_id_vehiculo" class="mb-3"> <label for="id_vehiculo" class="block mb-2 text-sm font-bold text-gray-700">
       Vehiculo<span class="asteriskField">*</span> </label>
-    <div class="mb-3">
-      <div class="relative">
-        <select
-          class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select2 focus:outline-none"
+      <div class="mb-3">
+        <div class="relative">
+          <select class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select2 focus:outline-none"
           name="vehiculo">  
           <option>---------</option>
           {% for vehiculos in vehiculo  %}
@@ -39,11 +34,18 @@
       </div>
     </div>
   </div>
-  <button type="submit"
+  <div class="flex justify-center">
+    
+    <button type="submit"
     class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-    enviar
+    Registrar factura
   </button>
+</div>
 </form>
+</div>
+</div>
+<script type="text/javascript" src="{% static 'js/facturacion.js' %}"></script>
 
 
-{% endblock content %}
+
+{% endblock %}
