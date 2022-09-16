@@ -11,18 +11,11 @@ class InsumoForm(forms.ModelForm):
     class Meta:
         model = Insumo
         fields= '__all__'
-    def clean(self):
-        try:
+    def clean(self): 
             nombre = self.cleaned_data['nombre']
-            marca = self.cleaned_data['marca']
             precio = self.cleaned_data['precio']
-            if Insumo.objects.filter(nombre=nombre,marca=marca,precio=precio).exists():
+            if Insumo.objects.filter(nombre=nombre,precio=precio).exists():
                 raise forms.ValidationError('Registro existente.') 
-                 
-        except Insumo.DoesNotExist:
-            pass
-        return self.cleaned_data      
-
             #fields = '__all__'
         
 class MarcaForm(forms.ModelForm):
