@@ -4,7 +4,7 @@ from time import strftime
 from django.shortcuts import render,redirect
 from datetime import date
 from django.utils import timezone
-
+from django.contrib.auth.decorators import login_required
 from miproyecto.forms import BackupForm
 from miproyecto.models import Backup
 
@@ -24,18 +24,19 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+@login_required(login_url='/login/')
 def exportar_datos():
     fecha=date.today()
     os.system(f"mysqldump --add-drop-table --column-statistics=0 -u root --password=0000 migueautos> static/backup/BKP_{fecha}.sql")
    
-
+@login_required(login_url='/login/')
 def importar_datos(archivo):
     try:
         os.system(f"mysql -u root password=0000 migueautos< {archivo[1:]}")
     except:
         print("Problemas al importar")
        
-            
+@login_required(login_url='/login/')            
 def backup(request,tipo):
    
     ejemplo_dir = 'static/backup/'

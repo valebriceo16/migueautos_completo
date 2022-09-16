@@ -1078,6 +1078,10 @@ html{
   border-width: 0;
 }
 
+.pointer-events-none{
+  pointer-events: none;
+}
+
 .visible{
   visibility: visible;
 }
@@ -1109,6 +1113,11 @@ html{
   left: 0px;
 }
 
+.inset-y-0{
+  top: 0px;
+  bottom: 0px;
+}
+
 .top-0{
   top: 0px;
 }
@@ -1133,12 +1142,12 @@ html{
   right: 0.5rem;
 }
 
-.bottom-0{
-  bottom: 0px;
-}
-
 .bottom-\[60px\]{
   bottom: 60px;
+}
+
+.bottom-0{
+  bottom: 0px;
 }
 
 .z-50{
@@ -1814,6 +1823,10 @@ html{
 
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
+}
+
+.fill-current{
+  fill: currentColor;
 }
 
 .p-6{
