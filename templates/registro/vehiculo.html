@@ -112,7 +112,7 @@
                         <select
                             class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                             name="estado">
-                            <option value="">Seleccione estado del vehiculo</option>
+                            <option value="">Seleccione estado del vehículo</option>
                             <option value="E">Exelente (E)</option>
                             <option value="R">Regular (R)</option>
                             <option value="B">Bien (B)</option>
@@ -130,7 +130,7 @@
                         <select
                             class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                              name="usuario">
-                            <option selected disable="true" value="">seleccione el vehiculo {{edit.usuario}}</option>
+                            <option selected disable="true" value="">Seleccione el vehículo {{edit.usuario}}</option>
                             {% for usuario in usuario_db %}
                             <option value="{{usuario.id}}">{{usuario}}
                             </option>
@@ -145,7 +145,7 @@
                 <button type="submit"
                     class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
                     value="Enviar informacion">
-                    AGREGAR USUARIO
+                    Agregar vehículo
                 </button>
                 {% csrf_token %}
             </div>

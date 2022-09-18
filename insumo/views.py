@@ -32,7 +32,7 @@ def insumos(request):
                 
             if not Insumo.objects.filter(nombre=nombre, precio=precio,marca=marca).exists():
                 Insumo.objects.create(nombre=nombre, precio=precio,marca=marca)
-                messages.success(request,'El insumo %s registrado correctamente' %nombre)
+                messages.success(request,'El insumo %s ha registrado correctamente' %nombre)
                 return redirect('insumo')
             else:
                 form = InsumoForm()
@@ -44,6 +44,7 @@ def insumos(request):
     } 
     return render (request, 'insumo/insumo.html', context)
 
+@login_required(login_url='/login/')
 def editarInsumo(request,id):   
     editar = Insumo.objects.get(id=id)
     marcas = Marca.objects.all()
@@ -66,7 +67,7 @@ def editarInsumo(request,id):
                 aux = form.save()
                 Insumo.objects.filter(id=aux.id).update(nombre=aux.nombre,marca=aux.marca,precio=aux.precio)
 
-                messages.success(request,'Insumo %s editado correctamente' % aux.nombre)
+                messages.success(request,'Insumo %s ha sido editado correctamente' % aux.nombre)
                 return redirect('insumo')
     else:
         form = InsumoForm()
@@ -78,6 +79,8 @@ def editarInsumo(request,id):
     }
     return render (request, 'insumo/editar.html', context) 
     
+    
+@login_required(login_url='/login/')
 def eliminarInsumo(request,id):
     delete_insumo = Insumo.objects.get(id=id)
     url_back = 'insumo'
@@ -88,7 +91,7 @@ def eliminarInsumo(request,id):
     }
     if request.method == 'POST' and 'eliminar' in request.POST: # si el metodo es post y el formulario es
         delete_insumo.delete() # se elimina el vehiculo
-        messages.success(request,'Vehiculo %s eliminado exitosamente' %delete_insumo.nombre) # se muestra un mensaje de exito
+        messages.success(request,'Vehiculo %s  ha sido eliminado exitosamente' %delete_insumo.nombre) # se muestra un mensaje de exito
         return redirect ('insumo') # se redirecciona a la url
     if request.method == 'POST' and 'cancelar' in request.POST: # si el metodo es post y el formulario es form2
         #no se realiza ninguna accion por que el cliente decidio no eliminar el vehiculo
@@ -96,6 +99,7 @@ def eliminarInsumo(request,id):
     return render (request, 'insumo/eliminar/eliminar.html',context)
 
 # LOGICA DE marca (EDITAR, ELIMINAR  Y OTRAS FUNCIONES)
+
 @login_required(login_url='/login/')
 def marca(request):
     db_insumo = Marca.objects.all()
@@ -112,7 +116,7 @@ def marca(request):
                 form = MarcaForm(request.POST)
                 s = form.save()
                 s.save()
-                messages.success(request,'La marca %s fue registrada exitosamente'%nombre)
+                messages.success(request,'La marca %s ha sido registrada exitosamente'%nombre)
                 return redirect('insumo')
     context = {
         'marcas' :db_insumo,
@@ -120,6 +124,7 @@ def marca(request):
     }
     return render (request,'insumo/marca.html', context)
 
+@login_required(login_url='/login/')
 def editarmarca(request,id):
     editar = Marca.objects.get(id=id)
     marca = Marca.objects.all()
@@ -132,7 +137,7 @@ def editarmarca(request,id):
                 return redirect ('insumo')
             else:
                 form.save()
-                messages.success(request,'La marca %s ah sido editada' %marca)
+                messages.success(request,'La marca %s ha sido editada' %marca)
                 return redirect ('insumo')
         else : 
             form = MarcaForm(instance=editar)
@@ -147,13 +152,15 @@ def editarmarca(request,id):
     }
     return render (request, 'insumo/editar/editarmarca.html', context)  
 
+
+@login_required(login_url='/login/')
 def eliminarMarca(request,id):
     vehiculo_d = Marca.objects.get(id=id) # se obtiene el vehiculo
     vehiculo_db = Marca.objects.all() # se carga la base de datos para ver los vehiculos
     txt_action = 'este marca' # se define el texto de la accion
     if request.method == 'POST' and 'eliminar' in request.POST: # si el metodo es post y el formulario es
         vehiculo_d.delete() # se elimina el vehiculo
-        messages.success(request,'Marca %s eliminada exitosamente' %vehiculo_d.nombre) # se muestra un mensaje de exito
+        messages.success(request,'Marca %s ha sido eliminada exitosamente' %vehiculo_d.nombre) # se muestra un mensaje de exito
         return redirect ('insumo') # se redirecciona a la url
     if request.method == 'POST' and 'cancelar' in request.POST: # si el metodo es post y el formulario es form2
         #no se realiza ninguna accion por que el cliente decidio no eliminar el vehiculo

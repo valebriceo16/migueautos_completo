@@ -11,7 +11,7 @@ class InsumoForm(forms.ModelForm):
     class Meta:
         model = Insumo
         fields= '__all__'
-    def clean(self):
+    def clean(self): 
             nombre = self.cleaned_data['nombre']
             precio = self.cleaned_data['precio']
             if Insumo.objects.filter(nombre=nombre,precio=precio).exists():

@@ -9,7 +9,7 @@ class Marca(models.Model):
 
 class Insumo(models.Model):
     nombre = models.CharField(max_length=45, unique=False )
-    precio = models.IntegerField()
+    precio = models.PositiveIntegerField()
     marca =  models.ForeignKey(Marca,on_delete=models.CASCADE ,related_name="insumos_db")   
     def __str__(self):
         return f'{self.nombre} $ {self.precio}., {self.marca}' 

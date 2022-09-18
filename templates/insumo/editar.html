@@ -10,7 +10,7 @@
                 class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none textinput focus:outline-none"
                 required="" id="id_nombre"> </div>
         <div id="div_id_precio" class="mb-3"> <label for="id_precio" class="block mb-2 text-sm font-bold text-gray-700">
-                Precio<span class="asteriskField">*</span> </label> <input type="number" value="{{edit.precio}}" name="precio"
+                Precio<span class="asteriskField">*</span> </label> <input min=0 type="number" value="{{edit.precio}}" name="precio"
                 class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none numberinput focus:outline-none"
                 required="" id="id_precio"> </div>
         <div id="div_id_marca" class="mb-3"> <label for="id_marca" class="block mb-2 text-sm font-bold text-gray-700">
