@@ -2,6 +2,9 @@
 {% load static %}
 {% block title %}Facturacion{% endblock title %}
 {% block content %}
+<button type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"  onclick = "history.back ()">
+  <img src="{% static 'img/flecha-izquierda.png' %}" class="h-6 mr-3 sm:h-9" alt="">
+</button>
 <div class="flex justify-center">
   <div class="w-1/2">
     <form method="POST">

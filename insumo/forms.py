@@ -10,7 +10,7 @@ class ServicioForm(forms.ModelForm):
 class InsumoForm(forms.ModelForm):
     class Meta:
         model = Insumo
-        fields= '__all__'
+        fields= ['nombre','precio','marca']
     def clean(self): 
             nombre = self.cleaned_data['nombre']
             precio = self.cleaned_data['precio']
@@ -21,7 +21,7 @@ class InsumoForm(forms.ModelForm):
 class MarcaForm(forms.ModelForm):
     class Meta:
         model = Marca
-        fields='__all__' 
+        fields=['nombre'] 
         #fields = '__all__'    
     def clean(self):
         nombre = self.cleaned_data['nombre']

@@ -7,9 +7,11 @@ Insumo
 {% endblock title  %}
 
 {% block content %}
-
+<button type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"  onclick = "history.back ()">
+    <img src="{% static 'img/flecha-izquierda.png' %}" class="h-6 mr-3 sm:h-9" alt="">
+  </button>
 <div class="container flex flex-wrap justify-center gap-10 mx-auto overflow-hidden">
-
+       
     <div
         class="w-full py-5 my-1 overflow-hidden sm:my-2 sm:px-2 sm:w-full md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-2 xl:px-2 xl:w-1/2">
         <h1 class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
@@ -44,12 +46,14 @@ Insumo
                             <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                 Nombre
                             </th>
-
                             <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                 Marca
                             </th>
                             <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                 Precio
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                Estado
                             </th>
                             <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                 Opciones
@@ -84,7 +88,9 @@ Insumo
             <td class="px-6 py-4">
                 {{insumo.precio }}
             </td>
-
+            <td class="px-6 py-4">
+                {{insumo.estado }}
+            </td>
             <td class="flex justify-around px-6 py-4 text-right">
                 {% comment %} Editar {% endcomment %}
                 <a href="{% url 'editarInsumo' insumo.id %}"

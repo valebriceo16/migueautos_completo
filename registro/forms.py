@@ -5,12 +5,11 @@ from .models import Usuario, Vehículo
 class usuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = '__all__'
-        
+        fields = ['nombre','apellido','identificacion','telefono']        
 class vehiculoForm(forms.ModelForm):
     class Meta:
         model = Vehículo
-        fields = ['placa','modelo','color','estado','usuario']
+        fields = ['placa','modelo','color','condición','usuario']
 
              
             
