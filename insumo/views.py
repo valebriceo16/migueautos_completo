@@ -4,51 +4,11 @@ from .models import Insumo, Marca, Servicio
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from django.views.generic.edit import CreateView
 
-class insumo(CreateView):
-    model = Insumo
-    fields = '__all__'
-    template_name = 'insumo/insumo_form.html'
     
 # Create your views here.
-@login_required(login_url='/login/')
-def servicio(request):
-    servicio_db = Servicio.objects.all()
-    servicio = ServicioForm(request.POST or None, request.FILES or None)
 
-    if servicio.is_valid():
-       servicio.save()
-       return redirect('insumo')
-   
-    context = {
-        'servicio_db': servicio_db,
-        'servicio': servicio,
-    }
-    return render (request, 'servicios/servicio.html', context)
-def editarServicio(request,id):
-    edit_Servicio = Servicio.objects.get(id=id)
-    servicio = ServicioForm(request.POST or None, request.FILES or None, instance=edit_Servicio)
-    context = {
-        'servicio': servicio,
-    }
-    if servicio.is_valid() and request.method == 'POST':
-        servicio.save()
-        return redirect('insumo')
-    return render (request, 'servicios/servicio.html', context) 
-     
-def eliminarServicio(request,id):
-    delete_Servicio = Servicio.objects.get(id=id)
-    url_back = 'servicio'
-    txt_action = 'Servicio'
-    context = {
-        'url_back': url_back,
-        'txt_action': txt_action,
-    }
-    if request.method == 'POST':
-        delete_Servicio.delete()
-        return redirect ('servicio')  
-    return render (request, 'servicios/deleteServicio.html',context)
+
 # lOGICA DE insumo (EDITAR ELIMINAR Y OTRAS FUNCIONES)
 
 
@@ -57,6 +17,7 @@ def eliminarServicio(request,id):
 @login_required(login_url='/login/')
 def insumos(request):
     db_insumo = Insumo.objects.all()
+
     form = InsumoForm()
     if request.method == 'POST':
         form = InsumoForm(request.POST)
@@ -64,17 +25,19 @@ def insumos(request):
             nombre = form.cleaned_data['nombre']
             marca = form.cleaned_data['marca']
             precio = form.cleaned_data['precio']
+            print(str(precio))
             print(marca)
             if Insumo.objects.filter(nombre=nombre,marca=marca,precio=precio).exists():
                 messages.success(request,'El insumo %s es existente' %nombre)
+                
             if not Insumo.objects.filter(nombre=nombre, precio=precio,marca=marca).exists():
                 Insumo.objects.create(nombre=nombre, precio=precio,marca=marca)
-                messages.success(request,'El insumo registrado correctamente' %nombre)
+                messages.success(request,'El insumo %s registrado correctamente' %nombre)
                 return redirect('insumo')
             else:
-                form = InsumoForm(request.POST)
+                form = InsumoForm()
     else:
-        form = InsumoForm(request.POST)
+        form = InsumoForm()
     context = {
         'insumos' : db_insumo,
         'form': form,
@@ -83,24 +46,35 @@ def insumos(request):
 
 def editarInsumo(request,id):   
     editar = Insumo.objects.get(id=id)
+    marcas = Marca.objects.all()
+
+    
+    form = InsumoForm()
     if request.method == 'POST':
         form = InsumoForm(request.POST, instance=editar)
-        insumo = request.POST['nombre']
         if form.is_valid():
-                nombre = form.cleaned_data['nombre']
-                precio = form.cleaned_data['precio']
-                marca = form.cleaned_data['marca']
-                print(marca)
-                if Insumo.objects.filter(nombre=nombre,precio=precio,marca=marca).exists():
-                    messages.warning(request,'Insumo no se puede editar')
-                    return redirect('insumo')
-                else:
-                    aux = form.save()
-                    messages.success(request,'Insumo editado correctamente')
+            insumo = form.cleaned_data['nombre']
+            valor = form.cleaned_data['precio']
+            marca = request.POST['marca']
+            print(marca)
+                
+            if Insumo.objects.filter(nombre=insumo, precio=valor,marca=marca).exists():
+                messages.warning(request,'Insumo ya registrado')
+                return redirect('insumo')
+            
+            else:
+                aux = form.save()
+                Insumo.objects.filter(id=aux.id).update(nombre=aux.nombre,marca=aux.marca,precio=aux.precio)
+
+                messages.success(request,'Insumo %s editado correctamente' % aux.nombre)
+                return redirect('insumo')
+    else:
+        form = InsumoForm()
         
     context = {
          'insumo': form,
          'edit': editar,
+         'marcas': marcas,
     }
     return render (request, 'insumo/editar.html', context) 
     
@@ -148,25 +122,28 @@ def marca(request):
 
 def editarmarca(request,id):
     editar = Marca.objects.get(id=id)
+    marca = Marca.objects.all()
     if request.method == "POST" and 'cancelar':
         form = MarcaForm(request.POST,instance=editar)
         if form.is_valid():
-            editar.nombre = request.POST['nombre'] #nose que quieres editar solo es un ejemplo
-            editar.save()
-            messages.success(request,'La marca %s ah sido editada' %editar.nombre)
-            return redirect ('insumo')
+            marca = request.POST['nombre'] #nose que quieres editar solo es un ejemplo
+            if Marca.objects.filter(nombre=marca):
+                messages.success(request,'Esta marca ya existe')
+                return redirect ('insumo')
+            else:
+                form.save()
+                messages.success(request,'La marca %s ah sido editada' %marca)
+                return redirect ('insumo')
         else : 
             form = MarcaForm(instance=editar)
-            context = {'formulario' : form}
-        
+    if request.method == 'POST' and 'cancelar' in request.POST: 
+        return redirect ('insumo')    
     else:
-        form = MarcaForm(instance=editar)    
-    if request.method == 'post' and 'editar' in request.POST: # si el metodo es post y el formulario es form2
-        #no se realiza ninguna accion por que el cliente decidio no eliminar el vehiculo
-        return redirect ('insumo')
+        form = MarcaForm(instance=editar)
     context={
         'formulario': form,
         'marca': editar,
+        'marcas':marca,
     }
     return render (request, 'insumo/editar/editarmarca.html', context)  
 
