@@ -1,8 +1,11 @@
 {% extends "_base.html" %}
 {% load static %}
+{% load tailwind_filters %}
 {% block title %} Vehiculo {% endblock title %}
 {% block content %}
-
+<button type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"  onclick = "history.back ()">
+    <img src="{% static 'img/flecha-izquierda.png' %}" class="h-6 mr-3 sm:h-9" alt="">
+  </button>
 <div class="flex flex-wrap justify-center gap-2 mx-auto overflow-hidden">
     <div
         class="w-full py-5 my-1 overflow-hidden sm:my-2 sm:px-2 sm:w-full md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-2 xl:px-2 xl:w-1/2">
@@ -78,7 +81,9 @@
                     </button>
                 </div>
             {% endif %}
-            <div id="div_id_placa" class="mb-3">
+            {% csrf_token %}        
+            {{ vehiculo|crispy}}
+            <!--<div id="div_id_placa" class="mb-3">
                 <label for="id_placa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Placa<span class="asteriskField">*</span>
                 </label>
@@ -139,7 +144,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div class="flex justify-center">
                 <button type="submit"
@@ -147,7 +152,7 @@
                     value="Enviar informacion">
                     Agregar vehículo
                 </button>
-                {% csrf_token %}
+               
             </div>
         </form>
     </div>
@@ -173,7 +178,9 @@
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Color
                                 </th>
-
+                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                    Condición
+                                </th>
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Estado
                                 </th>
@@ -196,6 +203,7 @@
                                 <td class="px-6 py-4">{{vehiculo.fecha}}</td>
                                 <td class="px-6 py-4">{{vehiculo.modelo}}</td>
                                 <td class="px-6 py-4">{{vehiculo.color}}</td>
+                                <td class="px-6 py-4">{{vehiculo.condición}}</td>
                                 <td class="px-6 py-4">{{vehiculo.estado}}</td>
                                 <td class="px-6 py-4">{{vehiculo.usuario}}</td>
                                 <td class="flex justify-around px-6 py-4 text-right">
