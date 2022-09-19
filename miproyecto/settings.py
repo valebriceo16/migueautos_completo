@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_tailwind', #Formularios con estilos de tailwind    
     
     #Apps del proyecto
+    'miproyecto',
     'registro',
     'insumo',
     'facturacion',
@@ -54,6 +55,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount'
 ]
+
+
 #Formularios con crispy
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind" #De donde salen los estilos para los forms de tailwind
 
@@ -125,7 +128,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '1122',
     }
 }
 
@@ -159,7 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-es' # lenguaje del proyecto
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota' #Zona horaria
 
 USE_I18N = True
 
@@ -177,10 +180,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Envio de correos en modo de desarrollo 
+#Envio de correos
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'joselinalfaro71@gmail.com'
-EMAIL_HOST_PASSWORD = 'hrqijuhwfnwtftxu'
+EMAIL_HOST_USER = 'autosmigue22@gmail.com'
+EMAIL_HOST_PASSWORD = 'tfnihaixddlvfkqy'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

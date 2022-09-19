@@ -3,10 +3,10 @@ from insumo.views import *
 
 
 urlpatterns = [
-    path('servicio/',servicio, name='servicio'),
+
     path ('insumo/', insumos, name='insumo'),
     path('marca/', marca, name='marca'),
-    path('prueba/',insumo.as_view(), name='prueba'),
+
      #marca MARCA
     path ('marca/editarMarca/<int:id>', editarmarca, name='editarmarca'),
     

@@ -1,56 +1,38 @@
 {% extends "_base.html" %}
+
 {% load i18n %}
-{% block title %}{% trans "Registrarse" %}{% endblock title %}
-{% load account socialaccount %}
-
+{% load tailwind_filters %}
+{% block title %}{% trans "Signup" %}{% endblock %}
+{% load static %}
 {% block content %}
-<div class="mt-5">
-  <h1 class="flex justify-center text-3xl">{% trans "Signup" %}</h1>
-</div>
 
 
-<div class="flex justify-center mt-10">
-  <form class="login" method="POST">
-    {% csrf_token %}
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+      <img class="w-1/2 h-8 mr-2" src="{% static 'img/logomigueautos.png' %}" alt="logo">
+      <span class="w-full">Inicio de sesión</span>   
+    </a>
+    <div class="w-1/2 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 t md:text-2xl dark:text-white">
+          Ingresa en tu cuenta :)
+        </h1>
+        <p class="mb-5 text-gray-900 dark:text-white">{% blocktrans %}¿Ya tienes una cuenta? Entonces por favor <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ login_url }}">Inicie sesión</a>.{% endblocktrans %}</p>
+        <div class="w-full">
+          {{ form|crispy }}
+        </div>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <div class="flex justify-center">
+    <button class="text-blue-700  hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800" type="submit">{% trans "Sign Up" %}</button>
     
-      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="id_email">Correo electrónico:</label>
-
-
-      <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="email" name="email" placeholder="Correo electrónico" autocomplete="email" required="" id="id_email">
-
-
-
-
-
-
-      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="id_password1">Contraseña:</label>
-
-
-      <input type="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="password1" placeholder="Contraseña" autocomplete="new-password" required=""
-        id="id_password1">
-
-
-
-
-
-
-      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="id_password2">Contraseña (de nuevo):</label>
-
-
-      <input type="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="password2" placeholder="Contraseña (de nuevo)" autocomplete="new-password"
-        required="" id="id_password2">
-
-
-
-
-
-
-      <a class="button secondaryAction" href="/accounts/password/reset/">¿Olvidó su contraseña?</a>
-      
-      <button
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="submit">Iniciar sesión</button>
-    </form>
-  </form>
+  </div>
 </div>
+</div>
+</div>
+</form>
+
 {% endblock %}
