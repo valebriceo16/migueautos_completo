@@ -47,6 +47,7 @@ def generar_factura(request):
     return render(request, 'facturacion/generar.html', context)
 
 def agregar_servicios(request):
+    #hola esto es una prueba
     pass
 
 @login_required(login_url='/login/')
